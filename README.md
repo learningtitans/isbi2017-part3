@@ -507,7 +507,11 @@ The Learning Titans are a team of researchers lead by [Prof. Eduardo Valle](http
 
 A Menegola, J Tavares, M Fornaciali, LT Li, S Avila, E Valle. RECOD Titans at ISIC Challenge 2017. [arXiv preprint arXiv:1703.04819](https://arxiv.org/abs/1703.04819).
 
+Video presentation of the report above: https://www.youtube.com/watch?v=DFrJeh6LkE4
+
 A Menegola, M Fornaciali, R Pires, FV Bittencourt, S Avila, E Valle. Knowledge transfer for melanoma screening with deep learning. IEEE International Symposium on Biomedical Images (ISBI) 2017. [arXiv preprint arXiv:1703.07479](https://arxiv.org/abs/1703.07479).
+
+Video presentation of the report above: https://www.youtube.com/watch?v=upJApUVCWJY
 
 M Fornaciali, M Carvalho, FV Bittencourt, S Avila, E Valle. Towards automated melanoma screening: Proper computer vision & reliable results. [arXiv preprint arXiv:1604.04024](https://arxiv.org/abs/1604.04024).
 
