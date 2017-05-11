@@ -18,6 +18,8 @@ We are committed to alleviate that problem. We are a very small team, and unfort
 
 Most of the code is a direct copy of the models posted in Tensorflow/slim, adjusted to fit the challenge (dataset, data preparation, results formatting, etc.). We created the code needed for the SVM decision layers, and the final meta-learning SVM stacking.
 
+**If you use this code in an academic context, please cite us.** The main reference is the "RECOD Titans at ISIC Challenge 2017" report. If the transfer learning aspects of this work are important to your context, you might find appropriate to cite the ISBI 2017 paper "Knowledge transfer for melanoma screening with deep learning" as well. The report and the paper are linked at the end of this file.
+
 ## Requirements
 
 *Hardware:* You'll need a CUDA/cuDNN compatible GPU card with enough RAM. We tested our models on NVIDIA GeForce Titan X, Titan X (Pascal), and Tesla K40c cards, all with 12 GiB of RAM.
