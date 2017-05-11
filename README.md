@@ -50,7 +50,7 @@ The procedure above creates a user inside the container equivalent to your exter
 
 ## Cloning this repository
 
-I'm assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
+We're assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
 
 ```bash
 cd ~/
