@@ -50,7 +50,7 @@ The procedure above creates a user inside the container equivalent to your exter
 
 ## Cloning this repository
 
-I'm assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
+We're assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
 
 ```bash
 cd ~/
@@ -193,7 +193,7 @@ python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/
 
 ### Preparing the official test dataset
 
-The procedure below creates the official test sets to tf-record:
+The procedure below converts the official test sets to tf-record:
 
 ```bash
 mkdir -p ~/isbi2017-part3/data/test.224.tfr
@@ -288,7 +288,7 @@ python train_image_classifier.py \
 
 ### Deep Learning Component Model rc30
 
-Resnet-101 v1 trained on "semi" dataset for 40000 batches, with per-image normalization that erases the average of the pixels.
+Resnet-101 v1 trained on "semi" dataset for 40000 batches.
 
 ```bash
 mkdir -p ~/isbi2017-part3/running/checkpoints.rc30/best
@@ -305,7 +305,6 @@ python train_image_classifier.py \
       --checkpoint_path=$HOME/isbi2017-part3/running/resnet_v1_101.ckpt  \
       --checkpoint_exclude_scopes=resnet_v1_101/logits \
       --save_interval_secs=3600 \
-      --normalize_per_image=1 \
       --max_number_of_steps=40000 \
       --experiment_tag="Network: Resnet101"  \
       --experiment_file=$HOME/isbi2017-part3/running/checkpoints.rc30/experiment.meta
