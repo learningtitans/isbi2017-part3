@@ -50,7 +50,7 @@ The procedure above creates a user inside the container equivalent to your exter
 
 ## Cloning this repository
 
-We're assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
+I'm assuming that you'll use the commands below to clone this repository. If you use a different path than ~/isbi2017-part3, adapt the instructions that follow as needed.
 
 ```bash
 cd ~/
@@ -61,7 +61,7 @@ git clone https://github.com/learningtitans/isbi2017-part3
 
 External data was allowed by the challenge. We collected data from several sources, listed below. Those sources are publicly obtainable --- more or less easily --- some requiring a license agreement, some requiring payment, some requiring both.
 
-If you're going to use our pre-trained models (see below) and test on the official challenge validation and test splits, you just have to procure the official challenge datasets. If you want to train the models "from scratch" and reproduce our steps exactly, you'll have to procure all datasets.
+If you're going to use our pre-trained models (see below) and test on the official challenge validation and test splits, you just have to procure the official challenge datasets and prepare the test sets (see below). If you want to train the models "from scratch" and reproduce our steps exactly, you'll have to procure all datasets, and prepare the training set as well.
 
 ### Official challenge datasets
 
@@ -193,7 +193,7 @@ python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/
 
 ### Preparing the official test dataset
 
-The procedure below converts the official test sets to tf-record:
+The procedure below creates the official test sets to tf-record:
 
 ```bash
 mkdir -p ~/isbi2017-part3/data/test.224.tfr
@@ -219,9 +219,23 @@ python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/d
 
 We released a pre-trained, ready-to-use model. That model is exactly the one used in the Challenge, so modulo bugs, package incompatibilites and random fluctuations, you should get the same AUCs as we did.
 
-The pre-trained model consists of 3 base deep-learning models, 3 base-model SVM layers, and one final stacked SVM layer. That's _a lot_ of parameters! The files are simply too big for github. The links are provided below:
+The pre-trained model consists of 3 base deep-learning models, 3 base-model SVM layers, and one final stacked SVM layer. That's _a lot_ of parameters! The files are too big for github, and are shared on [figshare](https://figshare.com/) with [DOI: 10.6084/m9.figshare.4993931](http://dx.doi.org/10.6084/m9.figshare.4993931). Direct links are provided below:
 
-*Download links available soon.*
+|File|DOI|Size|MD5|
+|----|---|:----:|:---:|
+|[Deep Learning Model RC.25](https://ndownloader.figshare.com/files/8411216)|10.6084/m9.figshare.4993931|465M|eaf7bb10806783d54c6b72c90b42486e|
+|[Deep Learning Model RC.28](https://ndownloader.figshare.com/files/8411219)|465M|700d7ef0ee53e6729e8a20bdd1acf8d8|
+|[Deep Learning Model RC.30](https://ndownloader.figshare.com/files/8411222)|453M|360167526d3a52fc52f7f4dced5035f1|
+|[All SVM Models](https://ndownloader.figshare.com/files/8411225)|71M|ce79acca7cf7dcdeabec32ed58e4feca|
+
+Download and unzip all files into ~/isbi2017-part3/running...
+
+```bash
+mkdir -p ~/isbi2017-part3/running
+# Download and unzip all files here
+```
+
+...then proceed to [predicting with the model](#Predicting-with-the-model).
 
 ## Training the model "from scratch"
 
@@ -288,7 +302,7 @@ python train_image_classifier.py \
 
 ### Deep Learning Component Model rc30
 
-Resnet-101 v1 trained on "semi" dataset for 40000 batches.
+Resnet-101 v1 trained on "semi" dataset for 40000 batches, with per-image normalization that erases the average of the pixels.
 
 ```bash
 mkdir -p ~/isbi2017-part3/running/checkpoints.rc30/best
@@ -305,6 +319,7 @@ python train_image_classifier.py \
       --checkpoint_path=$HOME/isbi2017-part3/running/resnet_v1_101.ckpt  \
       --checkpoint_exclude_scopes=resnet_v1_101/logits \
       --save_interval_secs=3600 \
+      --normalize_per_image=1 \
       --max_number_of_steps=40000 \
       --experiment_tag="Network: Resnet101"  \
       --experiment_file=$HOME/isbi2017-part3/running/checkpoints.rc30/experiment.meta
@@ -504,17 +519,16 @@ The Learning Titans are a team of researchers lead by [Prof. Eduardo Valle](http
 
 ### Our papers and reports
 
-A Menegola, J Tavares, M Fornaciali, LT Li, S Avila, E Valle. RECOD Titans at ISIC Challenge 2017. [arXiv preprint arXiv:1703.04819](https://arxiv.org/abs/1703.04819).
+A Menegola, J Tavares, M Fornaciali, LT Li, S Avila, E Valle. RECOD Titans at ISIC Challenge 2017. [arXiv preprint arXiv:1703.04819](https://arxiv.org/abs/1703.04819) | [Video presentation](https://www.youtube.com/watch?v=DFrJeh6LkE4) | [PDF Presentation](http://eduardovalle.com/wordpress/wp-content/uploads/2017/05/menegola2017isbi-RECOD-ISIC-Challenge-slides.pdf)
 
-Video presentation of the report above: https://www.youtube.com/watch?v=DFrJeh6LkE4
-
-A Menegola, M Fornaciali, R Pires, FV Bittencourt, S Avila, E Valle. Knowledge transfer for melanoma screening with deep learning. IEEE International Symposium on Biomedical Images (ISBI) 2017. [arXiv preprint arXiv:1703.07479](https://arxiv.org/abs/1703.07479).
-
-Video presentation of the report above: https://www.youtube.com/watch?v=upJApUVCWJY
+A Menegola, M Fornaciali, R Pires, FV Bittencourt, S Avila, E Valle. Knowledge transfer for melanoma screening with deep learning. IEEE International Symposium on Biomedical Images (ISBI) 2017. [arXiv preprint arXiv:1703.07479](https://arxiv.org/abs/1703.07479) | [Video presentation](https://www.youtube.com/watch?v=upJApUVCWJY)
+| [PDF Presentation](http://eduardovalle.com/wordpress/wp-content/uploads/2017/05/menegola2017isbi-TransferLearningMelanomaScreening-slides.pdf)
 
 M Fornaciali, M Carvalho, FV Bittencourt, S Avila, E Valle. Towards automated melanoma screening: Proper computer vision & reliable results. [arXiv preprint arXiv:1604.04024](https://arxiv.org/abs/1604.04024).
 
-M Fornaciali, S Avila, M Carvalho, E Valle. Statistical learning approach for robust melanoma screening. SIBGRAPI Conference on Graphics, Patterns and Images (SIBGRAPI) 2014. [DOI: 10.1109/SIBGRAPI.2014.48](https://scholar.google.com.br/scholar?cluster=3052571560066780582&hl=en&as_sdt=0,5&sciodt=0,5)
+M Fornaciali, S Avila, M Carvalho, E Valle. Statistical learning approach for robust melanoma screening. SIBGRAPI Conference on Graphics, Patterns and Images (SIBGRAPI) 2014. [DOI: 10.1109/SIBGRAPI.2014.48](https://scholar.google.com.br/scholar?cluster=3052571560066780582&hl=en&as_sdt=0,5&sciodt=0,5) | [PDF Presentation](https://sites.google.com/site/robustmelanomascreening/SIBGRAPI_Slides_MichelFornaciali.pdf?attredirects=0)
+
+[Robust Melanoma Screening Minisite](https://sites.google.com/site/robustmelanomascreening/)
 
 
 ## Copyright and license
