@@ -12,7 +12,7 @@ There's a separated repository for the [models used in Part 1: Lesion Segmentati
 
 **Please note: this is an alpha public release**, still quite rough around the edges. Please, help us to improve this code, by [submitting an issue](https://github.com/learningtitans/isbi2017-part3/issues) if you find any problems.
 
-Despite the best effort of authors, reproducing results of todays' Machine Learning is challenging, due to the complexity of the machinery, involving millions of lines of code distributed among thousands of packages ---  and the management of hundreds of random factors.
+Despite the best effort of authors, reproducing results of todays' Machine Learning is challenging, due to the complexity of the machinery, involving millions of lines of code distributed among thousands of packages — and the management of hundreds of random factors.
 
 We are committed to alleviate that problem. We are a very small team, and unfortunately, cannot provide help with technical issues (e.g., procuring data, installing hardware or software, etc.), but we'll do our best to share the technical and scientific details needed to reproduce the results. Please, see our contacts at the end of this documents.
 
@@ -61,15 +61,15 @@ git clone https://github.com/learningtitans/isbi2017-part3
 
 ## Obtaining and preparing the data
 
-External data was allowed by the challenge. We collected data from several sources, listed below. Those sources are publicly obtainable --- more or less easily --- some requiring a license agreement, some requiring payment, some requiring both.
+External data was allowed by the challenge. We collected data from several sources, listed below. Those sources are publicly obtainable — more or less easily — some requiring a license agreement, some requiring payment, some requiring both.
 
 If you're going to use our pre-trained models (see below) and test on the official challenge validation and test splits, you just have to procure the official challenge datasets and prepare the test sets (see below). If you want to train the models "from scratch" and reproduce our steps exactly, you'll have to procure all datasets, and prepare the training set as well.
 
 ### Official challenge datasets
 
-The official [ISIC 2017 Challenge](https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab) challenge dataset has 2,000 dermoscopic images (374 melanomas, 254 seborrheic keratoses, and 1,372 benign nevi). It's freely available, after signing up at the challenge website. **You have to download download both training and test (and validation, if desired) sets**, and unzip them to the ~/isbi2017-part3/data/challenge directory (flat in the same directory, or in subdirectories, it does not matter).
+The official [ISIC 2017 Challenge](https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab) challenge dataset has 2,000 dermoscopic images (374 melanomas, 254 seborrheic keratoses, and 1,372 benign nevi). It's freely available, after signing up at the challenge website. **You have to download both training and test (and validation, if desired) sets**, and unzip them to the ~/isbi2017-part3/data/challenge directory (flat in the same directory, or in subdirectories, it does not matter).
 
-*The procedure:* (1) Download/unzip the challenge files into ~/isbi2017-part3/data/challenge. (2) Delete or move the superpixel files. One way to accomplish it:
+*The procedure:* (1) Download/unzip the challenge files into ~/isbi2017-part3/data/challenge (including ground truth data). (2) Delete or move the superpixel files. One way to accomplish it:
 
 ```bash
 mkdir -p ~/isbi2017-part3/data/challenge
@@ -173,24 +173,24 @@ find ~/isbi2017-part3/data -name '*.bmp' -exec sh -c 'echo "{}"; convert "{}" -r
 
 The procedure below creates the actual training sets. The training set we called "deploy" in the technical report contains all images listed in the first column of ~/isbi2017-part3/data/deploy2017.txt. The training set we called "semi" contain those images, minus those listed in ~/isbi2017-part3/data/diff-semi.txt.
 
-Each training set will actually be separated into three splits: train, validation, and a vestigial test split with a handful of images (due to our reuse of generic code that assumes three splits). The train split was used to find the weights in the deep learning models, and to train the SVM layers in the models which use it. The validation split was used to compute what we called in the report "internal validation AUC", to train the stacked SVM meta-model, and --- in a few cases --- to establish an early-stopping procedure for the deep-learning training. We didn't use the vestigial test split.
+Each training set will actually be separated into three splits: train, validation, and a vestigial test split with a handful of images (due to our reuse of generic code that assumes three splits). The train split was used to find the weights in the deep learning models, and to train the SVM layers in the models which use it. The validation split was used to compute what we called in the report "internal validation AUC", to train the stacked SVM meta-model, and — in a few cases — to establish an early-stopping procedure for the deep-learning training. We didn't use the vestigial test split.
 
 You can inspect which images fall in which splits by listing the *.log files in the *.tfr folders created below.
 
 The procedure:
 
 ```bash
-mkdir -p ~/isbi2017-part3/data/deploy.224.tfr
-python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/deploy.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
-
-mkdir -p ~/isbi2017-part3/data/semi.224.tfr
-python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/semi.224.tfr ~/isbi2017-part3/data/diff-semi.txt
-
 mkdir -p ~/isbi2017-part3/data/deploy.299.tfr
 python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images299 ~/isbi2017-part3/data/deploy.299.tfr ~/isbi2017-part3/data/no-blacklist.txt
 
 mkdir -p ~/isbi2017-part3/data/semi.299.tfr
 python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images299 ~/isbi2017-part3/data/semi.299.tfr ~/isbi2017-part3/data/diff-semi.txt
+
+mkdir -p ~/isbi2017-part3/data/deploy.224.tfr
+python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/deploy.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
+
+mkdir -p ~/isbi2017-part3/data/semi.224.tfr
+python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/data/deploy2017.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/semi.224.tfr ~/isbi2017-part3/data/diff-semi.txt
 ```
 
 ### Preparing the official test dataset
@@ -198,11 +198,11 @@ python ~/isbi2017-part3/datasets/convert_skin_lesions.py TRAIN ~/isbi2017-part3/
 The procedure below creates the official test sets to tf-record:
 
 ```bash
-mkdir -p ~/isbi2017-part3/data/test.224.tfr
-python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_test_v2.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/test.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
-
 mkdir -p ~/isbi2017-part3/data/test.299.tfr
 python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_test_v2.txt ~/isbi2017-part3/data/images299 ~/isbi2017-part3/data/test.299.tfr ~/isbi2017-part3/data/no-blacklist.txt
+
+mkdir -p ~/isbi2017-part3/data/test.224.tfr
+python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_test_v2.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/test.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
 ```
 
 ### (Optional) Preparing the official validation dataset
@@ -210,11 +210,11 @@ python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/d
 The procedure below converts the official validation sets to tf-record:
 
 ```bash
-mkdir -p ~/isbi2017-part3/data/val.224.tfr
-python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_validation.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/val.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
-
 mkdir -p ~/isbi2017-part3/data/val.299.tfr
 python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_validation.txt ~/isbi2017-part3/data/images299 ~/isbi2017-part3/data/val.299.tfr ~/isbi2017-part3/data/no-blacklist.txt
+
+mkdir -p ~/isbi2017-part3/data/val.224.tfr
+python ~/isbi2017-part3/datasets/convert_skin_lesions.py TEST ~/isbi2017-part3/data/isbi2017_official_validation.txt ~/isbi2017-part3/data/images224 ~/isbi2017-part3/data/val.224.tfr ~/isbi2017-part3/data/no-blacklist.txt
 ```
 
 ## Pre-trained model
@@ -224,7 +224,7 @@ We released a pre-trained, ready-to-use model. That model is exactly the one use
 The pre-trained model consists of 3 base deep-learning models, 3 base-model SVM layers, and one final stacked SVM layer. That's _a lot_ of parameters! The files are too big for github, and are shared on [figshare](https://figshare.com/) with [DOI: 10.6084/m9.figshare.4993931](http://dx.doi.org/10.6084/m9.figshare.4993931). Direct links are provided below:
 
 |File|Size|MD5|
-|----|:----:|:---:|
+|—-|:—-:|:—:|
 |[Deep Learning Model RC.25](https://ndownloader.figshare.com/files/8411216)|465M|eaf7bb10806783d54c6b72c90b42486e|
 |[Deep Learning Model RC.28](https://ndownloader.figshare.com/files/8411219)|465M|700d7ef0ee53e6729e8a20bdd1acf8d8|
 |[Deep Learning Model RC.30](https://ndownloader.figshare.com/files/8411222)|453M|360167526d3a52fc52f7f4dced5035f1|
@@ -235,13 +235,15 @@ Download and unzip all files into ~/isbi2017-part3/running...
 ```bash
 mkdir -p ~/isbi2017-part3/running
 # Download and unzip all files here
+mkdir ~/isbi2017-part3/running/checkpoints.rc30/best # Fix path issue with pre-trained rc.30 model
+ln -s ~/isbi2017-part3/running/checkpoints.rc30/model.ckpt-22907.* ~/isbi2017-part3/running/checkpoints.rc30/best
 ```
 
 ...then proceed to [predicting with the model](#predicting-with-the-model).
 
 ## Training the model "from scratch"
 
-Strictly speaking, the training will not be purely from scratch, since we will transfer knowledge from models pre-trained on ImageNet. We do not recommend --- except for scientific curiosity --- training strictly from scratch, since training for ImageNet is a slow and complex endeavor in itself.
+Strictly speaking, the training will not be purely from scratch, since we will transfer knowledge from models pre-trained on ImageNet. We do not recommend — except for scientific curiosity — training strictly from scratch, since training for ImageNet is a slow and complex endeavor in itself.
 
 We need the ImageNet weights of two models: Resnet-101 and Inception-v4, available [here](https://github.com/tensorflow/models/tree/master/slim#Pretrained). Download and unzip them to ~/isbi2017-part3/running:
 
@@ -429,10 +431,10 @@ The instructions below show how to make predictions with the model, by assemblin
 Start by getting the predictions and features from the componente models:
 
 ```bash
-mkdir -p ~/isbi2017-part3/running/isbitest.features2
+mkdir -p ~/isbi2017-part3/running/isbitest.features
 cd ~/isbi2017-part3
 
-./etc/predict_all_component_models_isbi.sh ~/isbi2017-part3/data/test.299.tfr ~/isbi2017-part3/data/test.224.tfr test ~/isbi2017-part3/running/isbitest.features2
+./etc/predict_all_component_models_isbi.sh ~/isbi2017-part3/data/test.299.tfr ~/isbi2017-part3/data/test.224.tfr test ~/isbi2017-part3/running/isbitest.features
 ```
 
 Each component model is sampled thrice. The procedure below creates 100 replicas from combinations of those samples:
@@ -478,16 +480,16 @@ There are two tests you can apply to check if you've ran the procedures correctl
 
 ### Comparing the submission files
 
-You cannot just diff the submission files, because the probabilities will be slightly different (due to random factors we did not control in the procedure above). However, the classification order should be the same, or almost the same between runs. You can check your files agains ours using the commands below:
+You cannot just diff the submission files, because the probabilities will be slightly different (due to random factors we did not control in the procedure above). However, the classification order should be the same, or almost the same between runs. Not all inversions are significant (ranks inversions between images on the same class do not affect the metrics).
+
+You can check your files agains ours using the commands below:
 
 ```bash
 cd ~/isbi2017-part3
 
-python etc/count_inversions.py data/isbi2017-titans-testv2-rc36xtrm.txt submission/isbi2017-rc36xtrm.txt
-python etc/count_inversions.py data/isbi2017-titans-val-rc36xtrm.txt submission/isbi2017-val-rc36xtrm.txt
+python etc/count_inversions.py data/challenge/ISIC-2017_Test_v2_Part3_GroundTruth.csv data/isbi2017-titans-testv2-rc36xtrm.txt submission/isbi2017-rc36xtrm.txt
+python etc/count_inversions.py data/challenge/ISIC-2017_Validation_Part3_GroundTruth.csv data/isbi2017-titans-val-rc36xtrm.txt submission/isbi2017-val-rc36xtrm.txt
 ```
-
-You should get close to 0 inversions in both tasks (melanoma and keratosis).
 
 ### Comparing the performances
 
@@ -496,8 +498,8 @@ To compare performances, first download to ~/isbi2017-part3/data the ground trut
 ```bash
 cd ~/isbi2017-part3
 
-python etc/compute_metrics.py data/ISIC-2017_Test_v2_Part3_GroundTruth.csv submission/isbi2017-rc36xtrm.txt
-python etc/compute_metrics.py data/ISIC-2017_Validation_Part3_GroundTruth.csv data/isbi2017-titans-val-rc36xtrm.txt
+python etc/compute_metrics.py data/challenge/ISIC-2017_Test_v2_Part3_GroundTruth.csv submission/isbi2017-rc36xtrm.txt
+python etc/compute_metrics.py data/challenge/ISIC-2017_Validation_Part3_GroundTruth.csv submission/isbi2017-val-rc36xtrm.txt
 ```
 
 For the test set you should get numbers very close to:

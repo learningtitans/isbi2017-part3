@@ -409,8 +409,8 @@ def main(_):
     with tf.Session(config=session_config) as sess:
       init_fn(sess)
 
-      init_op = tf.global_variables_initializer()
-      sess.run(init_op)
+      # init_op = tf.global_variables_initializer()
+      # sess.run(init_op)
 
       coord = tf.train.Coordinator()
       threads = tf.train.start_queue_runners(sess=sess, coord=coord)
