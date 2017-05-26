@@ -491,6 +491,9 @@ python etc/count_inversions.py data/challenge/ISIC-2017_Test_v2_Part3_GroundTrut
 python etc/count_inversions.py data/challenge/ISIC-2017_Validation_Part3_GroundTruth.csv data/isbi2017-titans-val-rc36xtrm.txt submission/isbi2017-val-rc36xtrm.txt
 ```
 
+In our tests we found that around ~2000 significant inversions are expected.
+
+
 ### Comparing the performances
 
 To compare performances, first download to ~/isbi2017-part3/data the ground truth files for the challenge [test set](https://challenge.kitware.com/#phase/584b0afccad3a51cc66c8e38) and for the challenge [validation set](https://challenge.kitware.com/#phase/584b0afacad3a51cc66c8e33). Then run the commands below:
@@ -515,6 +518,8 @@ Melanoma AUC: 0.907778
 Keratosis AUC: 0.994929
 Average AUC: 0.951354
 ```
+
+In our tests we found that ~1 p.p. fluctuations are expected.
 
 ## About us
 

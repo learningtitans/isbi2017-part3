@@ -46,7 +46,7 @@ set -u
 [ -f "$SUBMISSION_FOLDER"/partial_rc28_3.txt ] || "$ISBI_FOLDER"/etc/predict_component_model_isbi.sh INCEPTION "$CHECKPOINT_ROOT_PATH"/checkpoints.rc28/model.ckpt-40000 "$TEST_DATASET" "$TEST_DATASET_SPLIT" "$SUBMISSION_FOLDER"/partial_rc28_3.txt --eval_replicas=50 --pool_scores=avg --normalize_per_image=1
 
 BEST_MODEL_RC30=$(ls -1 "$CHECKPOINT_ROOT_PATH"/checkpoints.rc30/best/model.ckpt-*.index)
-BEST_MODEL_RC30="$BEST_MODEL_RC30%.index"
+BEST_MODEL_RC30="${BEST_MODEL_RC30%.index}"
 
 [ -f "$SUBMISSION_FOLDER"/partial_rc30_1.txt ] || "$ISBI_FOLDER"/etc/predict_component_model_isbi.sh RESNET "$BEST_MODEL_RC30" "$TEST_DATASET_224" "$TEST_DATASET_SPLIT" "$SUBMISSION_FOLDER"/partial_rc30_1.txt --eval_replicas=50 --pool_scores=avg --normalize_per_image=1
 [ -f "$SUBMISSION_FOLDER"/partial_rc30_2.txt ] || "$ISBI_FOLDER"/etc/predict_component_model_isbi.sh RESNET "$BEST_MODEL_RC30" "$TEST_DATASET_224" "$TEST_DATASET_SPLIT" "$SUBMISSION_FOLDER"/partial_rc30_2.txt --eval_replicas=50 --pool_scores=avg --normalize_per_image=1
