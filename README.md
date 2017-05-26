@@ -10,7 +10,7 @@ There's a separated repository for the [models used in Part 1: Lesion Segmentati
 
 ## Foreword
 
-**Please note: this is an alpha public release**, still quite rough around the edges. Please, help us to improve this code, by [submitting an issue](https://github.com/learningtitans/isbi2017-part3/issues) if you find any problems.
+**Please note: this is a beta public release**. Please, help us to improve this code, by [submitting an issue](https://github.com/learningtitans/isbi2017-part3/issues) if you find any problems.
 
 Despite the best effort of authors, reproducing results of todays' Machine Learning is challenging, due to the complexity of the machinery, involving millions of lines of code distributed among thousands of packages — and the management of hundreds of random factors.
 
@@ -491,7 +491,7 @@ python etc/count_inversions.py data/challenge/ISIC-2017_Test_v2_Part3_GroundTrut
 python etc/count_inversions.py data/challenge/ISIC-2017_Validation_Part3_GroundTruth.csv data/isbi2017-titans-val-rc36xtrm.txt submission/isbi2017-val-rc36xtrm.txt
 ```
 
-In our tests we found that around ~2000 significant inversions are expected.
+In our tests we found that a few thousand significant inversions are expected.
 
 
 ### Comparing the performances
