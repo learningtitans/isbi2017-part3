@@ -44,8 +44,8 @@ FLAGS = parser.parse_args()
 
 valid_svm_methods = [ 'RBF', 'LINEAR_DUAL', 'LINEAR_PRIMAL' ]
 if not FLAGS.svm_method in valid_svm_methods :
-	print('--svm_method must be one of ', ', '.join(valid_svm_methods), file=sys.stderr)
-	sys.exit(1)
+    print('--svm_method must be one of ', ', '.join(valid_svm_methods), file=sys.stderr)
+    sys.exit(1)
 SVM_LINEAR = FLAGS.svm_method == 'LINEAR_DUAL' or FLAGS.svm_method == 'LINEAR_PRIMAL'
 SVM_DUAL = FLAGS.svm_method == 'LINEAR_DUAL'
 
@@ -55,8 +55,8 @@ HYPER_JOBS = FLAGS.jobs
 
 valid_preprocesses = [ 'PCA', 'PCA_WHITEN', 'Z_SCORE', 'NONE' ]
 if not FLAGS.preprocess in valid_preprocesses :
-	print('--preprocess must be one of ', ' '.join(valid_preprocesses), file=sys.stderr)
-	sys.exit(1)
+    print('--preprocess must be one of ', ' '.join(valid_preprocesses), file=sys.stderr)
+    sys.exit(1)
 
 first = start = su.print_and_time('Reading training data...', file=sys.stderr)
 ids, labels, features = su.read_pickled_data(FLAGS.input_training)
@@ -69,22 +69,22 @@ max_gamma   = min(3.0, min_gamma+32.0)
 scale_gamma = max_gamma-min_gamma
 print('\tSamples: ', num_samples, file=sys.stderr)
 if not SVM_LINEAR :
-	print('\tGamma: ', min_gamma, min_gamma+scale_gamma, file=sys.stderr)
+    print('\tGamma: ', min_gamma, min_gamma+scale_gamma, file=sys.stderr)
 
 start = su.print_and_time('Training preprocessor...', file=sys.stderr)
 
 if FLAGS.preprocess == 'PCA' :
-	preprocessor = sk.decomposition.PCA(copy=False, whiten=False)
+    preprocessor = sk.decomposition.PCA(copy=False, whiten=False)
 elif FLAGS.preprocess == 'PCA_WHITEN' :
-	preprocessor = sk.decomposition.PCA(copy=False, whiten=True)
+    preprocessor = sk.decomposition.PCA(copy=False, whiten=True)
 elif FLAGS.preprocess == 'Z_SCORE' :
-	preprocessor = sk.preprocessing.StandardScaler(copy=False)
+    preprocessor = sk.preprocessing.StandardScaler(copy=False)
 elif FLAGS.preprocess == 'NONE' :
-	# func=None implies identity function
-	preprocessor = sk.preprocessing.FunctionTransformer(func=None, inverse_func=None, validate=False,
-		accept_sparse=False, pass_y=False, kw_args=None, inv_kw_args=None)
+    # func=None implies identity function
+    preprocessor = sk.preprocessing.FunctionTransformer(func=None, inverse_func=None, validate=False,
+        accept_sparse=False, pass_y=False, kw_args=None, inv_kw_args=None)
 else :
-	assert False, '(bug) Invalid value for FLAGS.preprocess: %s' % FLAGS.preprocess
+    assert False, '(bug) Invalid value for FLAGS.preprocess: %s' % FLAGS.preprocess
 features = preprocessor.fit_transform(features)
 
 group_msg = 'ungrouped' if FLAGS.no_group else 'grouped'

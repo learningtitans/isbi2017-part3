@@ -61,13 +61,13 @@ echo Launching prediction for "$MODEL" on "$VALIDATION_DATASET"
 echo -n > "$PREVIOUS_LIST"
 while :
 do
-	ls -1 "$CHECKPOINTS_DIR_PATH" | grep "$CHECKPOINT_REGEXP" | sort > "$CURRENT_LIST"
-	CHANGED=$(diff "$PREVIOUS_LIST" "$CURRENT_LIST")
-	if [ "$CHANGED" != "" ]; then
-		echo What changed: "$CHANGED" ....
+    ls -1 "$CHECKPOINTS_DIR_PATH" | grep "$CHECKPOINT_REGEXP" | sort > "$CURRENT_LIST"
+    CHANGED=$(diff "$PREVIOUS_LIST" "$CURRENT_LIST")
+    if [ "$CHANGED" != "" ]; then
+        echo What changed: "$CHANGED" ....
         NEW_CHECKPOINT="$(ls -1 --sort=time "$CHECKPOINTS_DIR_PATH" | grep "$CHECKPOINT_REGEXP" | head -n 1)"
-		echo Found new checkpoint: "$NEW_CHECKPOINT" --- launching validation...
-		rm "$NEW_SCORES" 2> /dev/null
+        echo Found new checkpoint: "$NEW_CHECKPOINT" --- launching validation...
+        rm "$NEW_SCORES" 2> /dev/null
         if [ "$MODEL" == "INCEPTION" ]; then
             python "$ISBI_MODELS"/predict_image_classifier.py \
                 --alsologtostderr \
@@ -84,42 +84,42 @@ do
                 --output_file="$PREDICTIONS" \
                 --metrics_file="$NEW_SCORES"
         else
-    		python "$ISBI_MODELS"/predict_image_classifier.py \
-    		    --alsologtostderr \
-    		    --checkpoint_path="$CHECKPOINTS_DIR_PATH" \
-    		    --dataset_dir="$VALIDATION_DATASET" \
-    		    --dataset_name=skin_lesions \
-    		    --task_name=label \
-    		    --dataset_split_name=validation \
-    			--eval_image_size=224 \
-    			--model_name=resnet_v1_101 \
-    			--preprocessing_name=vgg \
+            python "$ISBI_MODELS"/predict_image_classifier.py \
+                --alsologtostderr \
+                --checkpoint_path="$CHECKPOINTS_DIR_PATH" \
+                --dataset_dir="$VALIDATION_DATASET" \
+                --dataset_name=skin_lesions \
+                --task_name=label \
+                --dataset_split_name=validation \
+                --eval_image_size=224 \
+                --model_name=resnet_v1_101 \
+                --preprocessing_name=vgg \
                 --batch_size="$BATCH" \
                 --eval_replicas="$REPLICAS" \
                 --output_file="$PREDICTIONS" \
                 --metrics_file="$NEW_SCORES"
         fi
-		NEW_SCORE=$(cut -d , -f 7 "$NEW_SCORES" | tr -d ' ' | tail -n 1)
-		OLD_BEST=$(cut -d , -f 7 "$OLD_SCORES" | tr -d ' ' | sort -n | tail -n 1)
-		[ "$OLD_BEST" == "" ]  && OLD_BEST="0"
-		[ "$NEW_SCORE" == "" ] && NEW_SCORE=$OLD_BEST
-		COMPARISON=$(echo $NEW_SCORE'>('$OLD_BEST'*1.001)' | bc -l)
-		echo "$NEW_SCORE $OLD_BEST $COMPARISON"
-		if [ "$COMPARISON" -eq 1 ]; then
-			echo Improved validation --- saving model...
-			NEW_FILE=$(tail -n 1 "$NEW_SCORES" | cut -d , -f 1)
-			# Obliterates previous best
-			mkdir -p "$CHECKPOINTS_DIR_PATH"/best
-			rm "$CHECKPOINTS_DIR_PATH"/best/*
-			ln "$NEW_FILE"* "$CHECKPOINTS_DIR_PATH"/best
-			cp "$NEW_SCORES" "$CHECKPOINTS_DIR_PATH"/best/best.meta
-			cp "$PREDICTIONS" "$CHECKPOINTS_DIR_PATH"/best/best.predictions
-		fi
-		tail -n 1 "$NEW_SCORES" >> "$OLD_SCORES"
-		cp "$OLD_SCORES" "$CHECKPOINTS_DIR_PATH"/best/all.meta
-		cp "$CURRENT_LIST" "$PREVIOUS_LIST"
-	fi
-	sleep 60
+        NEW_SCORE=$(cut -d , -f 7 "$NEW_SCORES" | tr -d ' ' | tail -n 1)
+        OLD_BEST=$(cut -d , -f 7 "$OLD_SCORES" | tr -d ' ' | sort -n | tail -n 1)
+        [ "$OLD_BEST" == "" ]  && OLD_BEST="0"
+        [ "$NEW_SCORE" == "" ] && NEW_SCORE=$OLD_BEST
+        COMPARISON=$(echo $NEW_SCORE'>('$OLD_BEST'*1.001)' | bc -l)
+        echo "$NEW_SCORE $OLD_BEST $COMPARISON"
+        if [ "$COMPARISON" -eq 1 ]; then
+            echo Improved validation --- saving model...
+            NEW_FILE=$(tail -n 1 "$NEW_SCORES" | cut -d , -f 1)
+            # Obliterates previous best
+            mkdir -p "$CHECKPOINTS_DIR_PATH"/best
+            rm "$CHECKPOINTS_DIR_PATH"/best/*
+            ln "$NEW_FILE"* "$CHECKPOINTS_DIR_PATH"/best
+            cp "$NEW_SCORES" "$CHECKPOINTS_DIR_PATH"/best/best.meta
+            cp "$PREDICTIONS" "$CHECKPOINTS_DIR_PATH"/best/best.predictions
+        fi
+        tail -n 1 "$NEW_SCORES" >> "$OLD_SCORES"
+        cp "$OLD_SCORES" "$CHECKPOINTS_DIR_PATH"/best/all.meta
+        cp "$CURRENT_LIST" "$PREVIOUS_LIST"
+    fi
+    sleep 60
 done
 
 
