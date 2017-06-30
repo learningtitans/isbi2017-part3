@@ -223,12 +223,12 @@ We released a pre-trained, ready-to-use model. That model is exactly the one use
 
 The pre-trained model consists of 3 base deep-learning models, 3 base-model SVM layers, and one final stacked SVM layer. That's _a lot_ of parameters! The files are too big for github, and are shared on [figshare](https://figshare.com/) with [DOI: 10.6084/m9.figshare.4993931](http://dx.doi.org/10.6084/m9.figshare.4993931). Direct links are provided below:
 
-|File|Size|MD5|
-|—-|:—-:|:—:|
-|[Deep Learning Model RC.25](https://ndownloader.figshare.com/files/8411216)|465M|eaf7bb10806783d54c6b72c90b42486e|
-|[Deep Learning Model RC.28](https://ndownloader.figshare.com/files/8411219)|465M|700d7ef0ee53e6729e8a20bdd1acf8d8|
-|[Deep Learning Model RC.30](https://ndownloader.figshare.com/files/8411222)|453M|360167526d3a52fc52f7f4dced5035f1|
-|[All SVM Models](https://ndownloader.figshare.com/files/8411225)|71M|ce79acca7cf7dcdeabec32ed58e4feca|
+| File | Size | MD5 |
+| -- | :--: | :--: |
+| [Deep Learning Model RC.25](https://ndownloader.figshare.com/files/8411216) | 465M |eaf7bb10806783d54c6b72c90b42486e |
+| [Deep Learning Model RC.28](https://ndownloader.figshare.com/files/8411219) | 465M |700d7ef0ee53e6729e8a20bdd1acf8d8 |
+| [Deep Learning Model RC.30](https://ndownloader.figshare.com/files/8411222) | 453M |360167526d3a52fc52f7f4dced5035f1 |
+| [All SVM Models](https://ndownloader.figshare.com/files/8411225) | 71M | ce79acca7cf7dcdeabec32ed58e4feca |
 
 Download and unzip all files into ~/isbi2017-part3/running...
 
