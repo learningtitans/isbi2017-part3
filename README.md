@@ -1,6 +1,6 @@
 # ISIC 2017 Challenge Models by "RECOD Titans"
 
-This repository is a branch of [Tensorflow/models/slim](https://github.com/tensorflow/models/tree/master/slim) containing the
+This repository is a branch of [Tensorflow/models/slim](https://github.com/tensorflow/models/tree/master/research/slim) containing the
 models implemented by [RECOD "Titans"](https://recodbr.wordpress.com/) for the IEEE ISBI 2017 Challenge presented by ISIC ([ISIC 2017: Skin Lesion Analysis Towards Melanoma Detection](https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a) challenge / Part 3:
 Lesion Classification).
 
@@ -17,6 +17,8 @@ Despite the best effort of authors, reproducing results of todays' Machine Learn
 We are committed to alleviate that problem. We are a very small team, and unfortunately, cannot provide help with technical issues (e.g., procuring data, installing hardware or software, etc.), but we'll do our best to share the technical and scientific details needed to reproduce the results. Please, see our contacts at the end of this documents.
 
 Most of the code is a direct copy of the models posted in Tensorflow/slim, adjusted to fit the challenge (dataset, data preparation, results formatting, etc.). We created the code needed for the SVM decision layers, and the final meta-learning SVM stacking.
+
+N.B.: Our code is now *a lot* behind current Tensorflow/slim. If you need to contrast our code with a reference version, the [March 1st 2017 commit](https://github.com/tensorflow/models/commit/6a9c0da96295f45909472cc70674b5b7d5c6fc2d) is a good place to start. In order to run our code you don't have to download Tensorflow/slim, you just need Tensorflow-GPU v.012 (it won't work with newer versions of Tensorflow after r1.0).
 
 **If you use this code in an academic context, please cite us.** The main reference is the "RECOD Titans at ISIC Challenge 2017" report. If the transfer learning aspects of this work are important to your context, you might find appropriate to cite the ISBI 2017 paper "Knowledge transfer for melanoma screening with deep learning" as well. The report and the paper are linked at the end of this file.
 
@@ -245,7 +247,7 @@ ln -s ~/isbi2017-part3/running/checkpoints.rc30/model.ckpt-22907.* ~/isbi2017-pa
 
 Strictly speaking, the training will not be purely from scratch, since we will transfer knowledge from models pre-trained on ImageNet. We do not recommend — except for scientific curiosity — training strictly from scratch, since training for ImageNet is a slow and complex endeavor in itself.
 
-We need the ImageNet weights of two models: Resnet-101 and Inception-v4, available [here](https://github.com/tensorflow/models/tree/master/slim#Pretrained). Download and unzip them to ~/isbi2017-part3/running:
+We need the ImageNet weights of two models: Resnet-101 and Inception-v4, available [here](https://github.com/tensorflow/models/tree/master/research/slim#Pretrained) (or check the exact addresses at the curl commands below). Download and unzip them to ~/isbi2017-part3/running:
 
 ```bash
 mkdir -p ~/isbi2017-part3/running
