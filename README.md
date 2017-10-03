@@ -18,7 +18,11 @@ We are committed to alleviate that problem. We are a very small team, and unfort
 
 Most of the code is a direct copy of the models posted in Tensorflow/slim, adjusted to fit the challenge (dataset, data preparation, results formatting, etc.). We created the code needed for the SVM decision layers, and the final meta-learning SVM stacking.
 
+<<<<<<< HEAD
 N.B.: Our code is now *a lot* behind current Tensorflow/slim. If you need to contrast our code with a reference version, the [March 1st 2017 commit](https://github.com/tensorflow/models/commit/6a9c0da96295f45909472cc70674b5b7d5c6fc2d) is a good place to start. In order to run our code you don't have to download Tensorflow/slim, you just need Tensorflow-GPU v.012 (it won't work with newer versions of Tensorflow after r1.0).
+=======
+N.B.: Our code is now *a lot* behind current Tensorflow/slim. If you need to contrast our code with a referrence version, the [March 1st 2017 commit](https://github.com/tensorflow/models/tree/master/research/slim) is a good place to start. In order to run our code you don't have to download Tensorflow/slim, you just need Tensorflow-GPU v.012 (it won't work with newer versions of Tensorflow after r1.0).
+>>>>>>> eb5405caa14a84fae6f1bff464168be3d38899e2
 
 **If you use this code in an academic context, please cite us.** The main reference is the "RECOD Titans at ISIC Challenge 2017" report. If the transfer learning aspects of this work are important to your context, you might find appropriate to cite the ISBI 2017 paper "Knowledge transfer for melanoma screening with deep learning" as well. The report and the paper are linked at the end of this file.
 
@@ -247,7 +251,11 @@ ln -s ~/isbi2017-part3/running/checkpoints.rc30/model.ckpt-22907.* ~/isbi2017-pa
 
 Strictly speaking, the training will not be purely from scratch, since we will transfer knowledge from models pre-trained on ImageNet. We do not recommend — except for scientific curiosity — training strictly from scratch, since training for ImageNet is a slow and complex endeavor in itself.
 
+<<<<<<< HEAD
 We need the ImageNet weights of two models: Resnet-101 and Inception-v4, available [here](https://github.com/tensorflow/models/tree/master/research/slim#Pretrained) (or check the exact addresses at the curl commands below). Download and unzip them to ~/isbi2017-part3/running:
+=======
+We need the ImageNet weights of two models: Resnet-101 and Inception-v4, available [here](https://github.com/tensorflow/models/tree/master/research/slim#Pretrained). Download and unzip them to ~/isbi2017-part3/running:
+>>>>>>> eb5405caa14a84fae6f1bff464168be3d38899e2
 
 ```bash
 mkdir -p ~/isbi2017-part3/running
